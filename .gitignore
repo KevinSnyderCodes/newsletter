@@ -1,2 +1,4 @@
-result.html
+__pycache__/
+*.html
+!template.html
 settings.py
