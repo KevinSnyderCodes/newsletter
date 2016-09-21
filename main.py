@@ -1,3 +1,4 @@
+import settings
 from urllib.request import urlopen
 from icalendar import Calendar, Event, vDatetime
 from datetime import datetime, date, timezone
@@ -19,9 +20,13 @@ url = "https://seattleu.instructure.com/feeds/calendars/user_hDYTHQB70FzLttLqhws
 cal = getCal(url)
 md = Markdown()
 context = {
-	'message': md.convert('''Hello, world!\n\nTesting, testing.\n\n- Item 1\n- Item 2'''),
+	'message': md.convert(settings.message),
 	'events': []
 }
+
+def isClubEvent(event):
+	return event['name'].startswith(('Club Meeting', 'Admin Committee Meeting', 'Speaker Session', 'Game Night', 'Google @ Seattle U')) or ('location' in event and event['location'] == 'ENGR 401')
+
 for item in cal.walk():
 	if item.name == "VEVENT" and item.get("summary").endswith(" [CS Club]"):
 		dt = item.get('dtstart').dt
@@ -37,6 +42,10 @@ for item in cal.walk():
 				'sDay': dt.strftime('%d'),
 				'sTime': dt.strftime('%I:%M %p').lstrip('0')
 			}
+			location = item.get('location').rstrip(', ')
+			if location:
+				event['location'] = location
+			event['isClubEvent'] = isClubEvent(event)
 			duplicate = False
 			for i in range(len(context['events'])):
 				if context['events'][i]['name'] == event['name'] and context['events'][i]['description'] == event['description']:
@@ -54,7 +63,7 @@ for item in cal.walk():
 
 for event in context['events']:
 	for k,v in event.items():
-		print(k, v.replace(u"\u2018", "'").replace(u"\u2019", "'"))
+		print(k, str(v).replace(u"\u2018", "'").replace(u"\u2019", "'"))
 
 print(str(context).replace(u"\u2018", "'").replace(u"\u2019", "'"))
 result = render('template.html', context)
