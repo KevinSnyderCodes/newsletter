@@ -46,7 +46,7 @@ Blank space.
 				<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" style="width: 100%; max-width: 700px; padding-bottom: 10px;">
 					<tr>
 						<td colspan="2" style="text-align: center;">
-							<h1 style="font-family: Courier; font-weight: normal;">Upcoming Events</h1>
+							<h1 style="font-family: Courier; font-weight: normal; color: white; background-color: black;">Club Events</h1>
 						</td>
 					</tr>
 				</table>
@@ -54,17 +54,18 @@ Blank space.
 					</td></tr></table>
 				<![endif]-->
 				{% for item in events %}
+				{% if item.isClubEvent %}
 				<!--[if gte mso 9]>
 				  <table id="tableForOutlook" align="center" style="width:700px;margin;auto;"><tr><td>
 				<![endif]-->
 				<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" style="width: 100%; max-width: 700px; padding-bottom: 10px;">
 					<tr>
-						<td style="text-align: center; width: 90px;">
+						<td style="text-align: center; width: 110px; padding-left: 10px; padding-right: 10px;">
 							<span style="margin-top: 1px; margin-bottom: 1px; padding: 0px; font-family: 'Helvetica'; font-size: 16px; font-weight: bold;">{{ item.sMonth }}</span><br />
 							<span style="margin-top: 1px; margin-bottom: 1px; padding: 0px; font-family: 'Helvetica'; font-size: 32px; font-weight: bold;">{{ item.sDay }}{% if item.eDay %}&ndash;{{ item.eDay}}{% endif %}</span><br />
 							{% if item.sTime != '12:00 AM' %}<span style="margin-top: 1px; margin-bottom: 1px; padding: 0px; font-family: 'Helvetica'; font-size: 13px; font-weight: bold;">{{ item.sTime }}</span><br />{% endif %}
 						</td>
-						<td style="padding-left: 30px;">
+						<td style="padding-left: 10px;">
 							<span style="font-size: 32px; font-weight: bold; margin-top: 21px; margin-bottom: 1px; font-family: 'Helvetica';">{{ item.name }}</span><br />
 							<!--span style="font-size: 18px; margin-top: 1px; margin-bottom: 18px; font-family: 'Helvetica';">FREE ICE CREAM</span-->
 						</td>
@@ -86,13 +87,63 @@ Blank space.
 				<!--[if gte mso 9]>
 					</td></tr></table>
 				<![endif]-->
+				{% endif %}
+				{% endfor %}
+				<!--[if gte mso 9]>
+				  <table id="tableForOutlook" align="center" style="width:700px;margin;auto;"><tr><td>
+				<![endif]-->
+				<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" style="width: 100%; max-width: 700px; padding-bottom: 10px;">
+					<tr>
+						<td colspan="2" style="text-align: center;">
+							<h1 style="font-family: Courier; font-weight: normal; color: white; background-color: black;">Other Events</h1>
+						</td>
+					</tr>
+				</table>
+				<!--[if gte mso 9]>
+					</td></tr></table>
+				<![endif]-->
+				{% for item in events %}
+				{% if not item.isClubEvent %}
+				<!--[if gte mso 9]>
+				  <table id="tableForOutlook" align="center" style="width:700px;margin;auto;"><tr><td>
+				<![endif]-->
+				<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" style="width: 100%; max-width: 700px; padding-bottom: 10px;">
+					<tr>
+						<td style="text-align: center; width: 110px; padding-left: 10px; padding-right: 10px;">
+							<span style="margin-top: 1px; margin-bottom: 1px; padding: 0px; font-family: 'Helvetica'; font-size: 16px; font-weight: bold;">{{ item.sMonth }}</span><br />
+							<span style="margin-top: 1px; margin-bottom: 1px; padding: 0px; font-family: 'Helvetica'; font-size: 32px; font-weight: bold;">{{ item.sDay }}{% if item.eDay %}&ndash;{{ item.eDay}}{% endif %}</span><br />
+							{% if item.sTime != '12:00 AM' %}<span style="margin-top: 1px; margin-bottom: 1px; padding: 0px; font-family: 'Helvetica'; font-size: 13px; font-weight: bold;">{{ item.sTime }}</span><br />{% endif %}
+						</td>
+						<td style="padding-left: 10px;">
+							<span style="font-size: 32px; font-weight: bold; margin-top: 21px; margin-bottom: 1px; font-family: 'Helvetica';">{{ item.name }}</span><br />
+							<!--span style="font-size: 18px; margin-top: 1px; margin-bottom: 18px; font-family: 'Helvetica';">FREE ICE CREAM</span-->
+						</td>
+					</tr>
+				</table>
+				<!--[if gte mso 9]>
+					</td></tr></table>
+				<![endif]-->
+				<!--[if gte mso 9]>
+				  <table id="tableForOutlook" align="center" style="width:700px;margin;auto;"><tr><td>
+				<![endif]-->
+				<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" style="width: 100%; max-width: 700px; padding-bottom: 30px;">
+					<tr>
+						<td colspan="2" style="font-family: 'Helvetica';">
+							{{ item.description }}
+						</td>
+					</tr>
+				</table>
+				<!--[if gte mso 9]>
+					</td></tr></table>
+				<![endif]-->
+				{% endif %}
 				{% endfor %}
 			</td>
 		</tr>
 		<tr id="footer" style="background-color: #222222; color: #9d9d9d;">
 			<td colspan="2" height="60" style="padding-left: 20px; padding-right: 20px; height: 60px;">
-				<h6 style="font-weight: normal; font-family: 'Helvetica';">CS Club events are subject to change. For the latest event information, please visit the <a href="https://seattleu.instructure.com/calendar?include_contexts=course_1557019" style="color: #9d9d9d; text-decoration-color: #9d9d9d;">club calendar</a>.<br />
-				To unsubscribe from the newsletter, <a href="#" style="color: #9d9d9d; text-decoration-color: #9d9d9d;">click here</a>.</h6>
+				<h6 style="font-weight: normal; font-family: 'Helvetica';">CS Club events are subject to change. For the latest event information, please visit the <a href="https://seattleu.instructure.com/calendar?include_contexts=course_1557019" style="color: #9d9d9d; text-decoration-color: #9d9d9d;">club calendar</a>.<!-- <br />
+				To unsubscribe from the newsletter, <a href="#" style="color: #9d9d9d; text-decoration-color: #9d9d9d;">click here</a>. --></h6>
 			</td>
 		</tr>
 	</table>
